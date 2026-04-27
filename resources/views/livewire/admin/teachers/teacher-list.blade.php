@@ -42,7 +42,7 @@
                     <p class="text-sm font-medium text-green-800">Unduh template terlebih dahulu</p>
                     <p class="text-xs text-green-600 mt-0.5">Isi sesuai format kolom yang tersedia</p>
                 </div>
-                <a href="{{ asset('templates/teachers_template.csv') }}" download class="btn-outline text-xs px-3 py-1.5">Unduh</a>
+                <a href="{{ route('templates.teachers') }}" class="btn-outline text-xs px-3 py-1.5">Unduh</a>
             </div>
 
             <form wire:submit="importCsv">

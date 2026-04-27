@@ -16,6 +16,15 @@ Route::get('/berita/{post:slug}', [\App\Http\Controllers\PostController::class, 
 Route::view('/tentang-kami', 'public.pages.about')->name('about');
 Route::view('/visi-misi', 'public.pages.vision-mission')->name('vision-mission');
 
+// Download template CSV
+Route::get('/templates/teachers', function () {
+    $file = public_path('templates/teachers_template.csv');
+    return response()->download($file, 'template_data_guru.csv', [
+        'Content-Type'        => 'text/csv',
+        'Content-Disposition' => 'attachment; filename="template_data_guru.csv"',
+    ]);
+})->name('templates.teachers');
+
 /*
 |--------------------------------------------------------------------------
 | Auth Routes (Guest only)
