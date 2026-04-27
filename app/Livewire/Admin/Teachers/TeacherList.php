@@ -59,7 +59,7 @@ class TeacherList extends Component
         }
 
         $this->importCount = Teacher::count();
-        session()->flash('success', 'Import selesai! Silakan cek data guru yang baru ditambahkan.');
+        $this->dispatch('notify', ['type' => 'success', 'message' => 'Import selesai! Silakan cek data guru yang baru ditambahkan.']);
         $this->showImportModal = false;
     }
 
@@ -71,7 +71,7 @@ class TeacherList extends Component
         }
         $name = $teacher->name;
         $teacher->delete();
-        session()->flash('success', "Data guru \"{$name}\" berhasil dihapus.");
+        $this->dispatch('notify', ['type' => 'success', 'message' => "Data guru \"{$name}\" berhasil dihapus."]);
     }
 
     public function render()

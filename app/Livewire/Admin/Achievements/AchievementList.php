@@ -24,7 +24,7 @@ class AchievementList extends Component
         }
         $name = $item->name;
         $item->delete();
-        session()->flash('success', "Prestasi \"{$name}\" berhasil dihapus.");
+        $this->dispatch('notify', ['type' => 'success', 'message' => "Prestasi \"{$name}\" berhasil dihapus."]);
     }
 
     public function render()

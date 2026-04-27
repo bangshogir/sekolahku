@@ -24,7 +24,7 @@ class InfrastructureList extends Component
         }
         $name = $item->name;
         $item->delete();
-        session()->flash('success', "Data infrastruktur \"{$name}\" berhasil dihapus.");
+        $this->dispatch('notify', ['type' => 'success', 'message' => "Data infrastruktur \"{$name}\" berhasil dihapus."]);
     }
 
     public function render()

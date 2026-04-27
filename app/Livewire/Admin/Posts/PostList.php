@@ -29,8 +29,9 @@ class PostList extends Component
             \Illuminate\Support\Facades\Storage::disk('public')->delete($post->featured_image);
         }
 
+        $title = $post->title;
         $post->delete();
-        session()->flash('success', 'Berita "' . $post->title . '" berhasil dihapus.');
+        $this->dispatch('notify', ['type' => 'success', 'message' => "Berita \"{$title}\" berhasil dihapus."]);
     }
 
     public function render()

@@ -22,7 +22,7 @@ class ExtracurricularList extends Component
         }
         $name = $item->name;
         $item->delete();
-        session()->flash('success', "Ekskul \"{$name}\" berhasil dihapus.");
+        $this->dispatch('notify', ['type' => 'success', 'message' => "Ekskul \"{$name}\" berhasil dihapus."]);
     }
 
     public function render()

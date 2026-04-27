@@ -335,7 +335,7 @@
             </div>
         </header>
 
-        {{-- Flash Messages --}}
+        {{-- Flash Messages (after redirect) --}}
         @if (session('success'))
             <div
                 x-data="{ show: true }"
@@ -350,9 +350,7 @@
                 class="mx-4 lg:mx-6 mt-4"
             >
                 <div class="flash-success">
-                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/>
-                    </svg>
+                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
                     {{ session('success') }}
                 </div>
             </div>
@@ -361,18 +359,47 @@
         @if (session('error'))
             <div
                 x-data="{ show: true }"
-                x-init="setTimeout(() => show = false, 4000)"
+                x-init="setTimeout(() => show = false, 5000)"
                 x-show="show"
                 class="mx-4 lg:mx-6 mt-4"
             >
                 <div class="flash-error">
-                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                        <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/>
-                    </svg>
+                    <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
                     {{ session('error') }}
                 </div>
             </div>
         @endif
+
+        {{-- Global Toast (untuk operasi Livewire tanpa redirect) --}}
+        <div
+            id="toast-container"
+            x-data="toastManager()"
+            @notify.window="add($event.detail)"
+            class="fixed top-5 right-5 z-[200] flex flex-col gap-2 pointer-events-none"
+            style="max-width: 360px;"
+        >
+            <template x-for="toast in toasts" :key="toast.id">
+                <div
+                    x-show="toast.visible"
+                    x-transition:enter="transition ease-out duration-300"
+                    x-transition:enter-start="opacity-0 translate-x-8"
+                    x-transition:enter-end="opacity-100 translate-x-0"
+                    x-transition:leave="transition ease-in duration-200"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0 translate-x-8"
+                    :class="toast.type === 'success' ? 'flash-success' : 'flash-error'"
+                    class="pointer-events-auto shadow-lg w-full"
+                >
+                    <template x-if="toast.type === 'success'">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"/></svg>
+                    </template>
+                    <template x-if="toast.type === 'error'">
+                        <svg class="w-5 h-5 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd"/></svg>
+                    </template>
+                    <span x-text="toast.message" class="text-sm font-medium"></span>
+                </div>
+            </template>
+        </div>
 
         {{-- Page Content --}}
         <main class="flex-1 overflow-y-auto p-4 lg:p-6">
@@ -383,6 +410,38 @@
 </div>
 
 @stack('scripts')
+
+<script>
+function toastManager() {
+    return {
+        toasts: [],
+        add(detail) {
+            const toast = {
+                id: Date.now(),
+                message: detail.message || detail,
+                type: detail.type || 'success',
+                visible: true,
+            };
+            this.toasts.push(toast);
+            setTimeout(() => {
+                toast.visible = false;
+                setTimeout(() => {
+                    this.toasts = this.toasts.filter(t => t.id !== toast.id);
+                }, 300);
+            }, 3500);
+        }
+    };
+}
+
+// Tangkap event Livewire dan teruskan ke Alpine toast
+document.addEventListener('livewire:initialized', () => {
+    Livewire.on('notify', (params) => {
+        const detail = Array.isArray(params) ? params[0] : params;
+        window.dispatchEvent(new CustomEvent('notify', { detail }));
+    });
+});
+</script>
+
 @livewireScripts
 </body>
 </html>

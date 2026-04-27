@@ -17,14 +17,14 @@ class UserList extends Component
     public function delete(int $id): void
     {
         if ($id === auth()->id()) {
-            session()->flash('error', 'Anda tidak dapat menghapus akun Anda sendiri.');
+            $this->dispatch('notify', ['type' => 'error', 'message' => 'Anda tidak dapat menghapus akun Anda sendiri.']);
             return;
         }
 
         $user = User::findOrFail($id);
         $name = $user->name;
         $user->delete();
-        session()->flash('success', "User \"{$name}\" berhasil dihapus.");
+        $this->dispatch('notify', ['type' => 'success', 'message' => "User \"{$name}\" berhasil dihapus."]);
     }
 
     public function render()
