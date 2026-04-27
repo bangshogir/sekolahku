@@ -132,11 +132,15 @@
         </div>
 
         {{-- Pagination --}}
-        @if($posts->hasPages())
-        <div class="p-4 border-t border-slate-100">
-            {{ $posts->links() }}
+        <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-slate-400">
+                Menampilkan {{ $posts->firstItem() ?? 0 }}–{{ $posts->lastItem() ?? 0 }}
+                dari <span class="font-medium text-slate-600">{{ $posts->total() }}</span> data
+            </p>
+            @if($posts->hasPages())
+                <div>{{ $posts->links() }}</div>
+            @endif
         </div>
-        @endif
     </div>
 
 </div>

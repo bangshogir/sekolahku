@@ -72,7 +72,13 @@
         <div class="col-span-3 text-center py-12 text-slate-400">Belum ada data ekskul.</div>
         @endforelse
     </div>
-    @if($extracurriculars->hasPages())
-    <div class="mt-4">{{ $extracurriculars->links() }}</div>
-    @endif
+    <div class="mt-4 flex flex-col sm:flex-row items-center justify-between gap-3 bg-white rounded-xl p-3 border border-slate-100">
+        <p class="text-xs text-slate-400">
+            Menampilkan {{ $extracurriculars->firstItem() ?? 0 }}–{{ $extracurriculars->lastItem() ?? 0 }}
+            dari <span class="font-medium text-slate-600">{{ $extracurriculars->total() }}</span> data
+        </p>
+        @if($extracurriculars->hasPages())
+            <div>{{ $extracurriculars->links() }}</div>
+        @endif
+    </div>
 </div>

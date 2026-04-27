@@ -197,8 +197,14 @@
                 </tbody>
             </table>
         </div>
-        @if($teachers->hasPages())
-        <div class="p-4 border-t border-slate-100">{{ $teachers->links() }}</div>
-        @endif
+        <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-slate-400">
+                Menampilkan {{ $teachers->firstItem() ?? 0 }}–{{ $teachers->lastItem() ?? 0 }}
+                dari <span class="font-medium text-slate-600">{{ $teachers->total() }}</span> data
+            </p>
+            @if($teachers->hasPages())
+                <div>{{ $teachers->links() }}</div>
+            @endif
+        </div>
     </div>
 </div>

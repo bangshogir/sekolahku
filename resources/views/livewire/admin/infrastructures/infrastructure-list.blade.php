@@ -84,8 +84,14 @@
                 </tbody>
             </table>
         </div>
-        @if($infrastructures->hasPages())
-        <div class="p-4 border-t border-slate-100">{{ $infrastructures->links() }}</div>
-        @endif
+        <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-slate-400">
+                Menampilkan {{ $infrastructures->firstItem() ?? 0 }}–{{ $infrastructures->lastItem() ?? 0 }}
+                dari <span class="font-medium text-slate-600">{{ $infrastructures->total() }}</span> data
+            </p>
+            @if($infrastructures->hasPages())
+                <div>{{ $infrastructures->links() }}</div>
+            @endif
+        </div>
     </div>
 </div>

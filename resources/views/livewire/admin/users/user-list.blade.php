@@ -87,8 +87,14 @@
                 </tbody>
             </table>
         </div>
-        @if($users->hasPages())
-        <div class="p-4 border-t border-slate-100">{{ $users->links() }}</div>
-        @endif
+        <div class="p-4 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-xs text-slate-400">
+                Menampilkan {{ $users->firstItem() ?? 0 }}–{{ $users->lastItem() ?? 0 }}
+                dari <span class="font-medium text-slate-600">{{ $users->total() }}</span> data
+            </p>
+            @if($users->hasPages())
+                <div>{{ $users->links() }}</div>
+            @endif
+        </div>
     </div>
 </div>
