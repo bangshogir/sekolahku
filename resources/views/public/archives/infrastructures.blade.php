@@ -49,7 +49,7 @@
 
     @if($infrastructures->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $infrastructures->links('pagination::tailwind') }}
+        {{ $infrastructures->links() }}
     </div>
     @endif
 </div>

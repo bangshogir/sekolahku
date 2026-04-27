@@ -60,7 +60,7 @@
 
     @if($achievements->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $achievements->links('pagination::tailwind') }}
+        {{ $achievements->links() }}
     </div>
     @endif
 </div>

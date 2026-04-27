@@ -49,7 +49,7 @@
 
     @if($extracurriculars->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $extracurriculars->links('pagination::tailwind') }}
+        {{ $extracurriculars->links() }}
     </div>
     @endif
 </div>
