@@ -178,8 +178,8 @@
      DATA GURU
      ============================================================ --}}
 @if($teachers->count())
-<section class="py-16 max-w-full overflow-hidden relative">
-    <div class="text-center mb-10 px-4">
+<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 overflow-hidden relative">
+    <div class="text-center mb-10">
         <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#009494;">Sumber Daya Manusia</div>
         <h2 class="text-3xl font-extrabold text-slate-900">Tenaga Pendidik</h2>
         <p class="text-slate-500 mt-3 text-sm max-w-2xl mx-auto">Mengenal lebih dekat para pendidik berdedikasi tinggi yang siap membimbing dan mencerdaskan generasi penerus bangsa.</p>
@@ -190,12 +190,8 @@
         .marquee-container {
             display: flex;
             overflow: hidden;
-            width: 100vw;
+            width: 100%;
             position: relative;
-            left: 50%;
-            right: 50%;
-            margin-left: -50vw;
-            margin-right: -50vw;
         }
         .marquee-content {
             display: flex;
