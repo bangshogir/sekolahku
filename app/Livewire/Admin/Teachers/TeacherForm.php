@@ -24,9 +24,39 @@ class TeacherForm extends Component
     public ?string $existingPhoto = null;
 
     public array $positions = [
-        'Kepala Madrasah', 'Wakil Kepala Bidang Kurikulum',
-        'Wakil Kepala Bidang Kesiswaan', 'Wakil Kepala Bidang Humas',
-        'Wakil Kepala Bidang Sarana', 'Guru', 'Guru BK', 'Staf Tata Usaha',
+        // Pimpinan
+        'Kepala Madrasah',
+        'Wakil Kepala Bidang Kurikulum',
+        'Wakil Kepala Bidang Kesiswaan',
+        'Wakil Kepala Bidang Humas',
+        'Wakil Kepala Bidang Sarana & Prasarana',
+        // Guru
+        'Guru Mata Pelajaran',
+        'Guru Kelas',
+        'Guru BK / Konselor',
+        'Guru Tahfidz',
+        'Guru Pendamping Khusus',
+        // Wali Kelas
+        'Wali Kelas VII',
+        'Wali Kelas VIII',
+        'Wali Kelas IX',
+        // Koordinator / Kepala Urusan
+        'Kepala Tata Usaha',
+        'Koordinator Ekstrakurikuler',
+        'Koordinator Perpustakaan',
+        'Koordinator Laboratorium',
+        'Koordinator UKS',
+        'Koordinator Tahfidz',
+        // Staf
+        'Staf Tata Usaha',
+        'Staf Keuangan',
+        'Staf Perpustakaan',
+        'Operator Sekolah',
+        'Pustakawan',
+        'Laboran',
+        // Lainnya
+        'Tenaga Kebersihan',
+        'Satpam / Penjaga Sekolah',
     ];
 
     protected function rules(): array
