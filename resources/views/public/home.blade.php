@@ -215,8 +215,8 @@
             box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
         }
         
-        .animate-scroll-left { animation: scroll-left 40s linear infinite; }
-        .animate-scroll-right { animation: scroll-right 40s linear infinite; }
+        .animate-scroll-left { animation: scroll-left 75s linear infinite; }
+        .animate-scroll-right { animation: scroll-right 75s linear infinite; }
         
         .marquee-container:hover .animate-scroll-left,
         .marquee-container:hover .animate-scroll-right {
