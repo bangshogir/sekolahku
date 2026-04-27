@@ -60,7 +60,7 @@
 
     @if($achievements->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $achievements->links() }}
+        {{ $achievements->links('pagination.public') }}
     </div>
     @endif
 </div>

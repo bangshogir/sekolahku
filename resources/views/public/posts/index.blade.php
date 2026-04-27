@@ -47,7 +47,7 @@
 
     {{-- Pagination --}}
     @if($posts->hasPages())
-    <div class="mt-10">{{ $posts->links() }}</div>
+    <div class="mt-10 flex justify-center">{{ $posts->links('pagination.public') }}</div>
     @endif
 </div>
 

@@ -43,7 +43,7 @@
 
     @if($teachers->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $teachers->links() }}
+        {{ $teachers->links('pagination.public') }}
     </div>
     @endif
 </div>

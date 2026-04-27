@@ -49,7 +49,7 @@
 
     @if($infrastructures->hasPages())
     <div class="mt-10 flex justify-center">
-        {{ $infrastructures->links() }}
+        {{ $infrastructures->links('pagination.public') }}
     </div>
     @endif
 </div>
