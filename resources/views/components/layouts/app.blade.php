@@ -8,6 +8,7 @@
 
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
+    @stack('styles')
 </head>
 <body style="background-color:#F8FAFC; font-family:'Plus Jakarta Sans',sans-serif;">
 
@@ -231,5 +232,6 @@
 </footer>
 
 @livewireScripts
+@stack('scripts')
 </body>
 </html>
