@@ -52,16 +52,15 @@ class DatabaseSeeder extends Seeder
         }
 
         // =============================================
-        // 3. Posts (Berita)
+        // 3. Posts (Berita) & Teachers (Guru) (Hanya di mode pengembangan/lokal)
         // =============================================
-        Post::factory(12)->published()->create([
-            'user_id' => $admin->id,
-        ]);
+        if (app()->environment('local')) {
+            Post::factory(12)->published()->create([
+                'user_id' => $admin->id,
+            ]);
 
-        // =============================================
-        // 4. Teachers (Guru)
-        // =============================================
-        Teacher::factory(10)->create();
+            Teacher::factory(10)->create();
+        }
 
         // =============================================
         // 5. Infrastructures (Fasilitas)
