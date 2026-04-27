@@ -10,7 +10,7 @@ class AchievementList extends Component
 {
     use WithPagination;
 
-    public function paginationView(): string { return 'components.admin-pagination'; }
+    public function paginationView(): string { return 'pagination.admin'; }
 
     public string $search = '';
     public string $level  = '';
