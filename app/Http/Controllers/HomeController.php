@@ -15,7 +15,7 @@ class HomeController extends Controller
     {
         $settings        = SchoolSetting::getAllSettings();
         $latestPosts     = Post::published()->latest('published_at')->limit(6)->get();
-        $teachers        = Teacher::active()->limit(8)->get();
+        $teachers        = Teacher::active()->get();
         $extracurriculars = Extracurricular::active()->latest()->get();
         $achievements    = Achievement::orderByDesc('year')->limit(8)->get();
         $infrastructures = Infrastructure::orderBy('name')->get();

@@ -178,28 +178,177 @@
      DATA GURU
      ============================================================ --}}
 @if($teachers->count())
-<section class="py-16 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="text-center mb-10">
+<section class="py-16 max-w-full overflow-hidden relative">
+    <div class="text-center mb-10 px-4">
         <div class="text-xs font-bold uppercase tracking-widest mb-2" style="color:#009494;">Sumber Daya Manusia</div>
         <h2 class="text-3xl font-extrabold text-slate-900">Tenaga Pendidik</h2>
+        <p class="text-slate-500 mt-3 text-sm max-w-2xl mx-auto">Mengenal lebih dekat para pendidik berdedikasi tinggi yang siap membimbing dan mencerdaskan generasi penerus bangsa.</p>
     </div>
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-5">
-        @foreach($teachers as $teacher)
-        <div class="card card-hover text-center p-5">
-            @if($teacher->photo)
-                <img src="{{ asset('storage/' . $teacher->photo) }}" class="w-20 h-20 rounded-full object-cover mx-auto mb-3">
-            @else
-                <div class="w-20 h-20 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-xl font-bold" style="background:linear-gradient(135deg,#006227,#009494);">
-                    {{ strtoupper(substr($teacher->name, 0, 2)) }}
-                </div>
-            @endif
-            <h3 class="font-bold text-slate-800 text-sm leading-tight">{{ $teacher->name }}</h3>
-            <p class="text-xs text-slate-500 mt-1">{{ $teacher->position }}</p>
-            @if($teacher->subject)
-                <span class="badge badge-primary mt-2 text-xs">{{ $teacher->subject }}</span>
-            @endif
+
+    @push('styles')
+    <style>
+        .marquee-container {
+            display: flex;
+            overflow: hidden;
+            width: 100vw;
+            position: relative;
+            left: 50%;
+            right: 50%;
+            margin-left: -50vw;
+            margin-right: -50vw;
+        }
+        .marquee-content {
+            display: flex;
+            gap: 1.5rem;
+            padding: 0.75rem 0.75rem;
+            width: max-content;
+        }
+        .teacher-card {
+            width: 240px;
+            flex-shrink: 0;
+            background: white;
+            border-radius: 1rem;
+            border: 1px solid #f1f5f9;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
+            padding: 1.25rem;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .teacher-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+        
+        .animate-scroll-left { animation: scroll-left 40s linear infinite; }
+        .animate-scroll-right { animation: scroll-right 40s linear infinite; }
+        
+        .marquee-container:hover .animate-scroll-left,
+        .marquee-container:hover .animate-scroll-right {
+            animation-play-state: paused;
+        }
+
+        @keyframes scroll-left {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(calc(-50% - 0.75rem)); }
+        }
+        @keyframes scroll-right {
+            0% { transform: translateX(calc(-50% - 0.75rem)); }
+            100% { transform: translateX(0); }
+        }
+        
+        /* Gradient fade effect on the sides */
+        .marquee-wrapper {
+            position: relative;
+        }
+        .marquee-wrapper::before,
+        .marquee-wrapper::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            width: 100px;
+            height: 100%;
+            z-index: 10;
+        }
+        .marquee-wrapper::before {
+            left: 0;
+            background: linear-gradient(to right, white, transparent);
+        }
+        .marquee-wrapper::after {
+            right: 0;
+            background: linear-gradient(to left, white, transparent);
+        }
+    </style>
+    @endpush
+
+    @php
+        // Split teachers into two rows
+        $half = ceil($teachers->count() / 2);
+        $row1 = $teachers->take($half);
+        $row2 = $teachers->skip($half);
+    @endphp
+
+    <div class="marquee-wrapper space-y-6">
+        {{-- Row 1: Scroll Left --}}
+        <div class="marquee-container">
+            <div class="marquee-content animate-scroll-left">
+                {{-- Original --}}
+                @foreach($row1 as $teacher)
+                    <div class="teacher-card">
+                        @if($teacher->photo)
+                            <img src="{{ asset('storage/' . $teacher->photo) }}" class="w-16 h-16 rounded-full object-cover mx-auto mb-3 shadow-md" alt="{{ $teacher->name }}">
+                        @else
+                            <div class="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold shadow-md" style="background:linear-gradient(135deg,#006227,#009494);">
+                                {{ strtoupper(substr($teacher->name, 0, 2)) }}
+                            </div>
+                        @endif
+                        <h3 class="font-bold text-slate-800 text-sm leading-tight line-clamp-1" title="{{ $teacher->name }}">{{ $teacher->name }}</h3>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-1" title="{{ $teacher->position }}">{{ $teacher->position }}</p>
+                        @if($teacher->subject)
+                            <p class="text-xs font-semibold mt-1.5" style="color:#009494;">{{ $teacher->subject }}</p>
+                        @endif
+                    </div>
+                @endforeach
+                {{-- Duplicate for infinite scroll --}}
+                @foreach($row1 as $teacher)
+                    <div class="teacher-card">
+                        @if($teacher->photo)
+                            <img src="{{ asset('storage/' . $teacher->photo) }}" class="w-16 h-16 rounded-full object-cover mx-auto mb-3 shadow-md" alt="{{ $teacher->name }}">
+                        @else
+                            <div class="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold shadow-md" style="background:linear-gradient(135deg,#006227,#009494);">
+                                {{ strtoupper(substr($teacher->name, 0, 2)) }}
+                            </div>
+                        @endif
+                        <h3 class="font-bold text-slate-800 text-sm leading-tight line-clamp-1" title="{{ $teacher->name }}">{{ $teacher->name }}</h3>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-1" title="{{ $teacher->position }}">{{ $teacher->position }}</p>
+                        @if($teacher->subject)
+                            <p class="text-xs font-semibold mt-1.5" style="color:#009494;">{{ $teacher->subject }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
         </div>
-        @endforeach
+
+        {{-- Row 2: Scroll Right --}}
+        @if($row2->count() > 0)
+        <div class="marquee-container">
+            <div class="marquee-content animate-scroll-right">
+                {{-- Original --}}
+                @foreach($row2 as $teacher)
+                    <div class="teacher-card">
+                        @if($teacher->photo)
+                            <img src="{{ asset('storage/' . $teacher->photo) }}" class="w-16 h-16 rounded-full object-cover mx-auto mb-3 shadow-md" alt="{{ $teacher->name }}">
+                        @else
+                            <div class="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold shadow-md" style="background:linear-gradient(135deg,#006227,#009494);">
+                                {{ strtoupper(substr($teacher->name, 0, 2)) }}
+                            </div>
+                        @endif
+                        <h3 class="font-bold text-slate-800 text-sm leading-tight line-clamp-1" title="{{ $teacher->name }}">{{ $teacher->name }}</h3>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-1" title="{{ $teacher->position }}">{{ $teacher->position }}</p>
+                        @if($teacher->subject)
+                            <p class="text-xs font-semibold mt-1.5" style="color:#009494;">{{ $teacher->subject }}</p>
+                        @endif
+                    </div>
+                @endforeach
+                {{-- Duplicate for infinite scroll --}}
+                @foreach($row2 as $teacher)
+                    <div class="teacher-card">
+                        @if($teacher->photo)
+                            <img src="{{ asset('storage/' . $teacher->photo) }}" class="w-16 h-16 rounded-full object-cover mx-auto mb-3 shadow-md" alt="{{ $teacher->name }}">
+                        @else
+                            <div class="w-16 h-16 rounded-full mx-auto mb-3 flex items-center justify-center text-white text-lg font-bold shadow-md" style="background:linear-gradient(135deg,#006227,#009494);">
+                                {{ strtoupper(substr($teacher->name, 0, 2)) }}
+                            </div>
+                        @endif
+                        <h3 class="font-bold text-slate-800 text-sm leading-tight line-clamp-1" title="{{ $teacher->name }}">{{ $teacher->name }}</h3>
+                        <p class="text-xs text-slate-500 mt-1 line-clamp-1" title="{{ $teacher->position }}">{{ $teacher->position }}</p>
+                        @if($teacher->subject)
+                            <p class="text-xs font-semibold mt-1.5" style="color:#009494;">{{ $teacher->subject }}</p>
+                        @endif
+                    </div>
+                @endforeach
+            </div>
+        </div>
+        @endif
     </div>
 </section>
 @endif
