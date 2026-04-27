@@ -16,6 +16,12 @@ Route::get('/berita/{post:slug}', [\App\Http\Controllers\PostController::class, 
 Route::view('/tentang-kami', 'public.pages.about')->name('about');
 Route::view('/visi-misi', 'public.pages.vision-mission')->name('vision-mission');
 
+// Arsip Publik
+Route::get('/tenaga-pendidik', [\App\Http\Controllers\PublicArchiveController::class, 'teachers'])->name('archives.teachers');
+Route::get('/fasilitas-sekolah', [\App\Http\Controllers\PublicArchiveController::class, 'infrastructures'])->name('archives.infrastructures');
+Route::get('/ekstrakurikuler', [\App\Http\Controllers\PublicArchiveController::class, 'extracurriculars'])->name('archives.extracurriculars');
+Route::get('/prestasi-madrasah', [\App\Http\Controllers\PublicArchiveController::class, 'achievements'])->name('archives.achievements');
+
 // Download template CSV
 Route::get('/templates/teachers', function () {
     $file = public_path('templates/teachers_template.csv');

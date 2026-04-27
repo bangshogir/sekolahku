@@ -65,6 +65,7 @@
                          class="absolute left-0 mt-0 w-48 bg-white/95 backdrop-blur-md rounded-xl shadow-lg border border-slate-100 py-2 z-50" style="display:none;">
                         <a href="{{ route('about') }}" class="block px-4 py-2 text-sm text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors {{ request()->routeIs('about') ? 'font-bold text-green-700' : '' }}">Tentang Kami</a>
                         <a href="{{ route('vision-mission') }}" class="block px-4 py-2 text-sm text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors {{ request()->routeIs('vision-mission') ? 'font-bold text-green-700' : '' }}">Visi & Misi</a>
+                        <a href="{{ route('archives.teachers') }}" class="block px-4 py-2 text-sm text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors {{ request()->routeIs('archives.teachers') ? 'font-bold text-green-700' : '' }}">Tenaga Pendidik</a>
                     </div>
                 </div>
 
@@ -72,7 +73,16 @@
                    style="{{ request()->routeIs('posts.*') ? 'background-color:#006227;' : '' }}">
                     Berita
                 </a>
-                <a href="{{ route('home') }}#fasilitas" class="px-4 py-2 rounded-lg text-sm font-medium text-slate-600 hover:text-green-700 hover:bg-green-50 transition-colors">
+                <a href="{{ route('archives.extracurriculars') }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('archives.extracurriculars') ? 'text-white' : 'text-slate-600 hover:text-green-700 hover:bg-green-50' }}"
+                   style="{{ request()->routeIs('archives.extracurriculars') ? 'background-color:#006227;' : '' }}">
+                    Ekstrakurikuler
+                </a>
+                <a href="{{ route('archives.achievements') }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('archives.achievements') ? 'text-white' : 'text-slate-600 hover:text-green-700 hover:bg-green-50' }}"
+                   style="{{ request()->routeIs('archives.achievements') ? 'background-color:#006227;' : '' }}">
+                    Prestasi
+                </a>
+                <a href="{{ route('archives.infrastructures') }}" class="px-4 py-2 rounded-lg text-sm font-medium transition-colors {{ request()->routeIs('archives.infrastructures') ? 'text-white' : 'text-slate-600 hover:text-green-700 hover:bg-green-50' }}"
+                   style="{{ request()->routeIs('archives.infrastructures') ? 'background-color:#006227;' : '' }}">
                     Fasilitas
                 </a>
             </nav>
@@ -128,12 +138,15 @@
                     <div class="px-4 py-1 space-y-1 ml-4 border-l-2 border-slate-100">
                         <a href="{{ route('about') }}" class="block px-4 py-2 text-sm text-slate-500 hover:text-green-700">Tentang Kami</a>
                         <a href="{{ route('vision-mission') }}" class="block px-4 py-2 text-sm text-slate-500 hover:text-green-700">Visi & Misi</a>
+                        <a href="{{ route('archives.teachers') }}" class="block px-4 py-2 text-sm text-slate-500 hover:text-green-700">Tenaga Pendidik</a>
                     </div>
                 </div>
             </div>
 
             <a href="{{ route('posts.index') }}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors">Berita</a>
-            <a href="{{ route('home') }}#fasilitas" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors">Fasilitas</a>
+            <a href="{{ route('archives.extracurriculars') }}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors">Ekstrakurikuler</a>
+            <a href="{{ route('archives.achievements') }}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors">Prestasi</a>
+            <a href="{{ route('archives.infrastructures') }}" class="block px-4 py-2.5 rounded-lg text-sm font-medium text-slate-600 hover:bg-green-50 hover:text-green-700 transition-colors">Fasilitas</a>
             <div class="pt-2 border-t border-slate-100">
                 <a href="{{ route('login') }}" class="btn-primary w-full justify-center text-sm">Login Admin</a>
             </div>
@@ -216,9 +229,9 @@
                 <ul class="space-y-2 text-sm" style="color:rgba(255,255,255,0.8);">
                     <li><a href="{{ route('home') }}" class="hover:text-white transition-colors hover:underline">Beranda</a></li>
                     <li><a href="{{ route('posts.index') }}" class="hover:text-white transition-colors hover:underline">Berita & Pengumuman</a></li>
-                    <li><a href="{{ route('home') }}#ekskul" class="hover:text-white transition-colors hover:underline">Ekstrakurikuler</a></li>
-                    <li><a href="{{ route('home') }}#prestasi" class="hover:text-white transition-colors hover:underline">Prestasi</a></li>
-                    <li><a href="{{ route('home') }}#fasilitas" class="hover:text-white transition-colors hover:underline">Fasilitas</a></li>
+                    <li><a href="{{ route('archives.extracurriculars') }}" class="hover:text-white transition-colors hover:underline">Ekstrakurikuler</a></li>
+                    <li><a href="{{ route('archives.achievements') }}" class="hover:text-white transition-colors hover:underline">Prestasi</a></li>
+                    <li><a href="{{ route('archives.infrastructures') }}" class="hover:text-white transition-colors hover:underline">Fasilitas</a></li>
                 </ul>
             </div>
         </div>
