@@ -13,6 +13,8 @@ class TeacherList extends Component
 {
     use WithPagination, WithFileUploads;
 
+    public function paginationView(): string { return 'components.admin-pagination'; }
+
     public string $search = '';
     public string $status = '';
 

@@ -10,6 +10,8 @@ class UserList extends Component
 {
     use WithPagination;
 
+    public function paginationView(): string { return 'components.admin-pagination'; }
+
     public string $search = '';
 
     public function updatingSearch(): void { $this->resetPage(); }
