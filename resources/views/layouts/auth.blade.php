@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — {{ \App\Models\SchoolSetting::get('school_name', 'Website Madrasah') }}</title>
+    @if(\App\Models\SchoolSetting::get('school_logo'))
+        <link rel="icon" href="{{ asset('storage/' . \App\Models\SchoolSetting::get('school_logo')) }}">
+    @endif
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
