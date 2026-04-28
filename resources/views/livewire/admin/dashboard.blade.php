@@ -45,20 +45,70 @@
                 <div class="text-xs mt-1" style="color:#009494;">{{ $stat['published'] }}</div>
             </div>
         </a>
-        @endforeach
-    </div>
+    {{-- Main Content Grid --}}
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
-    {{-- Visitor Tracking Chart --}}
-    <div class="card">
-        <div class="p-5 border-b border-slate-100 flex items-center justify-between">
-            <div>
-                <h2 class="font-bold text-slate-800">Grafik Pengunjung Web</h2>
-                <p class="text-xs text-slate-500 mt-1">Statistik unik visit per hari (7 hari terakhir)</p>
+        {{-- Visitor Tracking Chart (Left / 2 Cols) --}}
+        <div class="card lg:col-span-2">
+            <div class="p-5 border-b border-slate-100 flex items-center justify-between">
+                <div>
+                    <h2 class="font-bold text-slate-800">Grafik Pengunjung Web</h2>
+                    <p class="text-xs text-slate-500 mt-1">Statistik unik visit per hari (7 hari terakhir)</p>
+                </div>
+            </div>
+            <div class="p-5">
+                <div id="visitorChart" style="min-height: 300px;"></div>
             </div>
         </div>
-        <div class="p-5">
-            <div id="visitorChart" style="min-height: 300px;"></div>
+
+        {{-- Reader Interaction Widget (Right / 1 Col) --}}
+        <div class="flex flex-col gap-6">
+            {{-- Total Feedback Mini Card --}}
+            <div class="card p-6 flex items-center gap-4" style="background: linear-gradient(135deg, #006227, #007a7a); color: white;">
+                <div class="p-3 bg-white/20 rounded-xl">
+                    <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M14.828 14.828a4 4 0 01-5.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div>
+                    <p class="text-sm text-green-100 font-medium">Total Respons Pembaca</p>
+                    <p class="text-3xl font-bold mt-1">{{ number_format($totalReactions) }} <span class="text-xs font-normal text-green-100">emotikon</span></p>
+                </div>
+            </div>
+
+            {{-- Top 3 Articles Card --}}
+            <div class="card flex-1">
+                <div class="p-5 border-b border-slate-100">
+                    <h2 class="font-bold text-slate-800">Top 3 Berita Disorot</h2>
+                    <p class="text-xs text-slate-500 mt-1">Artikel dengan feedback terbanyak</p>
+                </div>
+                <div class="p-2">
+                    @forelse($popularPosts as $index => $post)
+                        <a href="{{ route('admin.posts.edit', $post) }}" class="flex gap-4 p-3 hover:bg-slate-50 rounded-xl transition-colors group">
+                            <div class="w-10 h-10 rounded-lg flex-shrink-0 bg-slate-100 flex items-center justify-center font-bold text-slate-400 group-hover:text-green-600 transition-colors">
+                                #{{ $index + 1 }}
+                            </div>
+                            <div class="min-w-0 flex-1">
+                                <p class="text-sm font-medium text-slate-800 truncate">{{ $post->title }}</p>
+                                <div class="flex items-center gap-2 mt-1">
+                                    <span class="text-xs text-slate-500">{{ $post->created_at->format('d M') }}</span>
+                                    <span class="w-1 h-1 rounded-full bg-slate-300"></span>
+                                    <span class="text-xs font-bold text-green-600 flex items-center gap-1">
+                                        <svg class="w-3 h-3" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+                                        {{ $post->reactions_count }}
+                                    </span>
+                                </div>
+                            </div>
+                        </a>
+                    @empty
+                        <div class="p-6 text-center text-sm text-slate-500">
+                            Belum ada berita yang menerima feedback.
+                        </div>
+                    @endforelse
+                </div>
+            </div>
         </div>
+        
     </div>
 </div>
 

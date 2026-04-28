@@ -61,7 +61,14 @@ class Dashboard extends Component
             $data[] = \App\Models\Visitor::where('visited_date', $date)->count();
         }
 
-        return view('livewire.admin.dashboard', compact('stats', 'labels', 'data'))
+        // Reactions Analytics
+        $totalReactions = \App\Models\PostReaction::count();
+        $popularPosts = Post::withCount('reactions')
+                            ->orderBy('reactions_count', 'desc')
+                            ->limit(3)
+                            ->get();
+
+        return view('livewire.admin.dashboard', compact('stats', 'labels', 'data', 'totalReactions', 'popularPosts'))
             ->layout('layouts.admin')
             ->title('Dashboard');
     }
