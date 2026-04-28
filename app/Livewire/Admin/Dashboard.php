@@ -52,9 +52,16 @@ class Dashboard extends Component
             ],
         ];
 
-        $recentPosts = Post::with('user')->latest()->limit(5)->get();
+        // Visitor Analytics (Last 7 Days)
+        $labels = [];
+        $data = [];
+        for ($i = 6; $i >= 0; $i--) {
+            $date = now()->subDays($i)->format('Y-m-d');
+            $labels[] = now()->subDays($i)->translatedFormat('d M');
+            $data[] = \App\Models\Visitor::where('visited_date', $date)->count();
+        }
 
-        return view('livewire.admin.dashboard', compact('stats', 'recentPosts'))
+        return view('livewire.admin.dashboard', compact('stats', 'labels', 'data'))
             ->layout('layouts.admin')
             ->title('Dashboard');
     }

@@ -48,56 +48,81 @@
         @endforeach
     </div>
 
-    {{-- Recent Posts Table --}}
+    {{-- Visitor Tracking Chart --}}
     <div class="card">
         <div class="p-5 border-b border-slate-100 flex items-center justify-between">
-            <h2 class="font-bold text-slate-800">Berita Terbaru</h2>
-            <a href="{{ route('admin.posts.index') }}" class="text-sm font-medium" style="color:#006227;">Lihat semua →</a>
+            <div>
+                <h2 class="font-bold text-slate-800">Grafik Pengunjung Web</h2>
+                <p class="text-xs text-slate-500 mt-1">Statistik unik visit per hari (7 hari terakhir)</p>
+            </div>
         </div>
-        <div class="overflow-x-auto">
-            <table class="table-base">
-                <thead>
-                    <tr>
-                        <th>Judul</th>
-                        <th>Kategori</th>
-                        <th>Status</th>
-                        <th>Penulis</th>
-                        <th>Tanggal</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse($recentPosts as $post)
-                    <tr>
-                        <td>
-                            <p class="font-medium text-slate-800 truncate" style="max-width:300px;">{{ $post->title }}</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-info">{{ $post->category }}</span>
-                        </td>
-                        <td>
-                            @if($post->is_published)
-                                <span class="badge badge-success">Dipublish</span>
-                            @else
-                                <span class="badge badge-gray">Draft</span>
-                            @endif
-                        </td>
-                        <td class="text-slate-500">{{ $post->user->name ?? '-' }}</td>
-                        <td class="text-slate-500 text-xs">{{ $post->created_at->format('d M Y') }}</td>
-                        <td>
-                            <a href="{{ route('admin.posts.edit', $post) }}" class="p-1.5 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors border border-transparent" title="Edit"><svg class="w-4 h-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z"/></svg></a>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr>
-                        <td colspan="6" class="text-center py-8 text-slate-400">
-                            Belum ada berita. <a href="{{ route('admin.posts.create') }}" style="color:#006227;" class="font-medium">Tulis sekarang</a>
-                        </td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table>
+        <div class="p-5">
+            <div id="visitorChart" style="min-height: 300px;"></div>
         </div>
     </div>
-
 </div>
+
+@push('scripts')
+<script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+<script>
+    document.addEventListener('livewire:initialized', () => {
+        var options = {
+            series: [{
+                name: 'Pengunjung',
+                data: {!! json_encode($data) !!}
+            }],
+            chart: {
+                height: 320,
+                type: 'area',
+                toolbar: { show: false },
+                fontFamily: 'inherit',
+                zoom: { enabled: false }
+            },
+            colors: ['#006227'],
+            fill: {
+                type: 'gradient',
+                gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.4,
+                    opacityTo: 0.1,
+                    stops: [0, 90, 100]
+                }
+            },
+            dataLabels: {
+                enabled: false
+            },
+            stroke: {
+                curve: 'smooth',
+                width: 3
+            },
+            xaxis: {
+                categories: {!! json_encode($labels) !!},
+                tooltip: { enabled: false },
+                axisBorder: { show: false },
+                axisTicks: { show: false }
+            },
+            yaxis: {
+                labels: {
+                    formatter: function (val) {
+                        return Math.floor(val);
+                    }
+                }
+            },
+            grid: {
+                borderColor: '#f1f5f9',
+                strokeDashArray: 4,
+            },
+            tooltip: {
+                y: {
+                    formatter: function (val) {
+                        return val + " IP Unik";
+                    }
+                }
+            }
+        };
+
+        var chart = new ApexCharts(document.querySelector("#visitorChart"), options);
+        chart.render();
+    });
+</script>
+@endpush
