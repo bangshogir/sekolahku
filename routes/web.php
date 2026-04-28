@@ -91,6 +91,8 @@ Route::middleware(['auth', 'admin'])
     Route::get('/settings/vision-mission', \App\Livewire\Admin\Pages\VisionMissionPage::class)->name('settings.vision-mission');
 
     // Manajemen User
+    Route::get('/profile/password', \App\Livewire\Admin\Profile\ChangePassword::class)->name('profile.password');
+
     Route::get('/users',              \App\Livewire\Admin\Users\UserList::class)->name('users.index');
     Route::get('/users/create',       \App\Livewire\Admin\Users\UserForm::class)->name('users.create');
     Route::get('/users/{user}/edit',  \App\Livewire\Admin\Users\UserForm::class)->name('users.edit');
