@@ -45,6 +45,9 @@
                 <div class="text-xs mt-1" style="color:#009494;">{{ $stat['published'] }}</div>
             </div>
         </a>
+        @endforeach
+    </div>
+
     {{-- Main Content Grid --}}
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
 
